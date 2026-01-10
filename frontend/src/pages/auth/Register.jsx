@@ -29,63 +29,65 @@ const Register = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+        <div className="min-h-[calc(100vh-64px)] flex items-center justify-center">
+            <div className="max-w-md w-full bg-gray-800 p-6 rounded-lg shadow-md">
+                <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
 
-            {error && (
-                <p className="bg-red-500/20 text-red-400 p-2 rounded mb-4">
-                    {error}
-                </p>
-            )}
+                {error && (
+                    <p className="bg-red-500/20 text-red-400 p-2 rounded mb-4">
+                        {error}
+                    </p>
+                )}
 
-            <form className="space-y-4" onSubmit={handleSubmit}>
-                <input
-                    name="name"
-                    placeholder="Name"
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
-                    required
-                />
+                <form className="space-y-4" onSubmit={handleSubmit}>
+                    <input
+                        name="name"
+                        placeholder="Name"
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
+                        required
+                    />
 
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
-                    required
-                />
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="Email"
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
+                        required
+                    />
 
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
-                    required
-                />
+                    <input
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
+                        required
+                    />
 
-                <input
-                    name="phone"
-                    placeholder="Phone"
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
-                    required
-                />
+                    <input
+                        name="phone"
+                        placeholder="Phone"
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
+                        required
+                    />
 
-                <select
-                    name="role"
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
-                >
-                    <option value="job_seeker">Job Seeker</option>
-                    <option value="employer">Employer</option>
-                </select>
+                    <select
+                        name="role"
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
+                    >
+                        <option value="job_seeker">Job Seeker</option>
+                        <option value="employer">Employer</option>
+                    </select>
 
-                <button className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded-md transition">
-                    Register
-                </button>
-            </form>
+                    <button className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded-md transition">
+                        Register
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };
