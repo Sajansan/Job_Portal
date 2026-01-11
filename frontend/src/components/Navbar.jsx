@@ -1,26 +1,33 @@
 import { Link } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
     return (
-        <nav className="bg-gray-800 border-b border-gray-700">
+        <nav
+            className="border-b backdrop-blur-sm sticky top-0 z-50"
+            style={{
+                backgroundColor: 'var(--bg-secondary)',
+                borderColor: 'var(--border)',
+            }}
+        >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                <h1 className="text-xl font-bold text-indigo-400">
-                    Job Portal
-                </h1>
+                <Link to="/" className="flex items-center gap-2 group">
+                    <div
+                        className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-white"
+                        style={{ background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%)' }}
+                    >
+                        JP
+                    </div>
+                    <h1
+                        className="text-xl font-bold transition-colors"
+                        style={{ color: 'var(--text-primary)' }}
+                    >
+                        Job Portal
+                    </h1>
+                </Link>
 
-                <div className="space-x-4">
-                    <Link
-                        to="/login"
-                        className="text-gray-300 hover:text-white transition"
-                    >
-                        Login
-                    </Link>
-                    <Link
-                        to="/register"
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition"
-                    >
-                        Register
-                    </Link>
+                <div className="flex items-center gap-4">
+                    <ThemeToggle />
                 </div>
             </div>
         </nav>
@@ -28,4 +35,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

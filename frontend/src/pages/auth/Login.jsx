@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { loginUser } from "../../services/authService";
 
@@ -30,7 +30,7 @@ const Login = () => {
 
             toast.success("Login successful");
 
-            // 🔁 Role-based redirect
+            // Role-based redirect
             if (data.user.role === "job_seeker") {
                 navigate("/jobs");
             } else {
@@ -44,36 +44,107 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-[calc(100vh-64px)] flex items-center justify-center">
-            <div className="max-w-md w-full bg-gray-800 p-6 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-
-                <form className="space-y-4" onSubmit={handleSubmit}>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
-                        required
-                    />
-
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md"
-                        required
-                    />
-
-                    <button
-                        disabled={loading}
-                        className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded-md transition disabled:opacity-50"
+        <div
+            className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4 py-8"
+            style={{ backgroundColor: 'var(--bg-primary)' }}
+        >
+            <div className="w-full max-w-md">
+                {/* Header */}
+                <div className="text-center mb-8">
+                    <h1
+                        className="text-3xl font-bold mb-2"
+                        style={{ color: 'var(--text-primary)' }}
                     >
-                        {loading ? "Logging in..." : "Login"}
-                    </button>
-                </form>
+                        Welcome Back
+                    </h1>
+                    <p style={{ color: 'var(--text-secondary)' }}>
+                        Sign in to access your account
+                    </p>
+                </div>
+
+                {/* Login Card */}
+                <div className="card">
+                    <form className="space-y-5" onSubmit={handleSubmit}>
+                        <div>
+                            <label
+                                htmlFor="email"
+                                className="block text-sm font-medium mb-2"
+                                style={{ color: 'var(--text-secondary)' }}
+                            >
+                                Email Address
+                            </label>
+                            <input
+                                id="email"
+                                type="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                onChange={handleChange}
+                                className="form-input"
+                                required
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="password"
+                                className="block text-sm font-medium mb-2"
+                                style={{ color: 'var(--text-secondary)' }}
+                            >
+                                Password
+                            </label>
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                onChange={handleChange}
+                                className="form-input"
+                                required
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="btn-primary mt-6"
+                        >
+                            {loading ? (
+                                <span className="flex items-center justify-center gap-2">
+                                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                                        <circle
+                                            className="opacity-25"
+                                            cx="12" cy="12" r="10"
+                                            stroke="currentColor"
+                                            strokeWidth="4"
+                                            fill="none"
+                                        />
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                        />
+                                    </svg>
+                                    Signing in...
+                                </span>
+                            ) : (
+                                "Sign In"
+                            )}
+                        </button>
+                    </form>
+
+                    {/* Register Link */}
+                    <div
+                        className="mt-6 pt-6 text-center border-t"
+                        style={{ borderColor: 'var(--border)' }}
+                    >
+                        <p style={{ color: 'var(--text-secondary)' }}>
+                            Don't have an account?{" "}
+                            <Link to="/register" className="auth-link">
+                                Register
+                            </Link>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     );
