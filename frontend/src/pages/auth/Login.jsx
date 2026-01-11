@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { loginUser } from "../../services/authService";
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
 
-    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,18 +19,27 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError("");
+        setLoading(true);
 
         try {
             const data = await loginUser(formData);
 
-            // Save JWT
+            // Save auth data
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
 
-            alert("Login successful");
+            toast.success("Login successful");
+
+            // 🔁 Role-based redirect
+            if (data.user.role === "job_seeker") {
+                navigate("/jobs");
+            } else {
+                navigate("/dashboard");
+            }
         } catch (err) {
-            setError(err.response?.data?.message || "Login failed");
+            toast.error(err.response?.data?.message || "Login failed");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -34,12 +47,6 @@ const Login = () => {
         <div className="min-h-[calc(100vh-64px)] flex items-center justify-center">
             <div className="max-w-md w-full bg-gray-800 p-6 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-
-                {error && (
-                    <p className="bg-red-500/20 text-red-400 p-2 rounded mb-4">
-                        {error}
-                    </p>
-                )}
 
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <input
@@ -60,8 +67,11 @@ const Login = () => {
                         required
                     />
 
-                    <button className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded-md transition">
-                        Login
+                    <button
+                        disabled={loading}
+                        className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded-md transition disabled:opacity-50"
+                    >
+                        {loading ? "Logging in..." : "Login"}
                     </button>
                 </form>
             </div>
