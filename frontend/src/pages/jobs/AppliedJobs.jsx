@@ -101,20 +101,26 @@ const AppliedJobs = () => {
                                 className="card flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
                             >
                                 <div className="flex-1">
-                                    <Link
-                                        to={`/jobs/${app.job_id}`}
-                                        className="text-lg font-semibold hover:opacity-80 transition-opacity"
+                                    <h3
+                                        className="text-lg font-semibold"
                                         style={{ color: 'var(--text-primary)' }}
                                     >
                                         {app.job_title || "Untitled Job"}
-                                    </Link>
-                                    <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-                                        Applied on {new Date(app.applied_at).toLocaleDateString('en-US', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric'
-                                        })}
-                                    </p>
+                                    </h3>
+                                    {app.company && (
+                                        <p className="text-sm mt-1" style={{ color: 'var(--accent)' }}>
+                                            {app.company}
+                                        </p>
+                                    )}
+                                    {app.applied_at && (
+                                        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
+                                            Applied on {new Date(app.applied_at).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            })}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <span

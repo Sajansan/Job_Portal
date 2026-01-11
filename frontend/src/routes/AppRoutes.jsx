@@ -10,6 +10,7 @@ import CreateJob from "../pages/jobs/CreateJob";
 import EditJob from "../pages/jobs/EditJob";
 import MyJobs from "../pages/jobs/MyJobs";
 import AppliedJobs from "../pages/jobs/AppliedJobs";
+import JobApplicants from "../pages/jobs/JobApplicants";
 import Profile from "../pages/Profile";
 
 const AppRoutes = () => {
@@ -74,9 +75,18 @@ const AppRoutes = () => {
                         </ProtectedRoute>
                     }
                 />
+                <Route
+                    path="/jobs/:jobId/applications"
+                    element={
+                        <ProtectedRoute>
+                            <JobApplicants />
+                        </ProtectedRoute>
+                    }
+                />
             </Route>
         </Routes>
     );
 };
 
 export default AppRoutes;
+

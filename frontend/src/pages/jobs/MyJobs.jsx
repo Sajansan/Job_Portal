@@ -162,12 +162,18 @@ const MyJobs = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex gap-2">
+                                <div className="flex flex-wrap gap-2">
                                     <Link
                                         to={`/jobs/${job.id}`}
                                         className="btn-secondary-sm"
                                     >
                                         View
+                                    </Link>
+                                    <Link
+                                        to={`/jobs/${job.id}/applications`}
+                                        className="btn-primary-sm"
+                                    >
+                                        Applicants
                                     </Link>
                                     <Link
                                         to={`/jobs/edit/${job.id}`}

@@ -1,11 +1,19 @@
 import api from "./axios";
 
-export const applyJob = (jobId) => {
-  return api.post("/job-applications", {
-    jobId,
+// Apply for a job with cover letter
+export const applyJob = (jobId, coverLetter = "") => {
+  return api.post("/applications", {
+    job_id: jobId,
+    cover_letter: coverLetter,
   });
 };
 
+// Get my applications (Job Seeker)
 export const getMyApplications = () => {
-  return api.get("/job-applications/my");
+  return api.get("/applications/my");
+};
+
+// Get applications for a specific job (Employer)
+export const getJobApplications = (jobId) => {
+  return api.get(`/applications/job/${jobId}`);
 };

@@ -14,6 +14,8 @@ const JobDetails = () => {
     const [applying, setApplying] = useState(false);
     const [deleting, setDeleting] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showApplyModal, setShowApplyModal] = useState(false);
+    const [coverLetter, setCoverLetter] = useState("");
 
     useEffect(() => {
         getJobById(id)
@@ -28,7 +30,7 @@ const JobDetails = () => {
             });
     }, [id]);
 
-    const handleApply = async () => {
+    const handleApplyClick = () => {
         if (!user) {
             toast.error("Please login to apply");
             navigate("/login");
@@ -38,11 +40,16 @@ const JobDetails = () => {
             toast.error("Only job seekers can apply");
             return;
         }
+        setShowApplyModal(true);
+    };
 
+    const handleApplySubmit = async () => {
         setApplying(true);
         try {
-            await applyJob(job.id);
+            await applyJob(job.id, coverLetter);
             toast.success("Application submitted successfully!");
+            setShowApplyModal(false);
+            setCoverLetter("");
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to apply");
         } finally {
@@ -195,21 +202,10 @@ const JobDetails = () => {
                         {/* Job Seeker: Apply Button */}
                         {user?.role === "job_seeker" && (
                             <button
-                                onClick={handleApply}
-                                disabled={applying}
+                                onClick={handleApplyClick}
                                 className="btn-primary flex-1"
                             >
-                                {applying ? (
-                                    <span className="flex items-center justify-center gap-2">
-                                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                                        </svg>
-                                        Applying...
-                                    </span>
-                                ) : (
-                                    "Apply Now"
-                                )}
+                                Apply Now
                             </button>
                         )}
 
@@ -240,6 +236,79 @@ const JobDetails = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Apply Modal */}
+            {showApplyModal && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                    style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
+                >
+                    <div
+                        className="w-full max-w-lg rounded-xl p-6"
+                        style={{
+                            backgroundColor: 'var(--bg-secondary)',
+                            border: '1px solid var(--border)'
+                        }}
+                    >
+                        <h3
+                            className="text-xl font-bold mb-2"
+                            style={{ color: 'var(--text-primary)' }}
+                        >
+                            Apply for {job.title}
+                        </h3>
+                        <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
+                            at {job.company}
+                        </p>
+
+                        <div className="mb-6">
+                            <label
+                                htmlFor="coverLetter"
+                                className="block text-sm font-medium mb-2"
+                                style={{ color: 'var(--text-primary)' }}
+                            >
+                                Cover Letter
+                            </label>
+                            <textarea
+                                id="coverLetter"
+                                value={coverLetter}
+                                onChange={(e) => setCoverLetter(e.target.value)}
+                                placeholder="Tell the employer why you're a great fit for this role..."
+                                className="form-input min-h-[150px] resize-y"
+                                rows={6}
+                            />
+                        </div>
+
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => {
+                                    setShowApplyModal(false);
+                                    setCoverLetter("");
+                                }}
+                                className="btn-secondary flex-1"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleApplySubmit}
+                                disabled={applying}
+                                className="btn-primary flex-1"
+                            >
+                                {applying ? (
+                                    <span className="flex items-center justify-center gap-2">
+                                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                        </svg>
+                                        Submitting...
+                                    </span>
+                                ) : (
+                                    "Submit Application"
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Delete Confirmation Modal */}
             {showDeleteModal && (
