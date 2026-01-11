@@ -5,3 +5,7 @@ export const applyJob = (jobId) => {
     jobId,
   });
 };
+
+export const getMyApplications = () => {
+  return api.get("/job-applications/my");
+};

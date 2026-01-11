@@ -5,6 +5,7 @@ import Register from "../pages/auth/Register";
 import Dashboard from "../pages/Dashboard";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Jobs from "../pages/jobs/Jobs";
+import AppliedJobs from "../pages/jobs/AppliedJobs";
 
 const AppRoutes = () => {
     return (
@@ -15,6 +16,8 @@ const AppRoutes = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/jobs" element={<Jobs />} />
+                <Route path="/applied-jobs" element={<AppliedJobs />} />
+
 
                 {/* Protected Routes */}
                 <Route
