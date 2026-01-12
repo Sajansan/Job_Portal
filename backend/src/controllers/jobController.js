@@ -49,6 +49,20 @@ export const getJobs = async (req, res) => {
   }
 };
 
+// Get Single Job
+export const getJobById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await pool.query("SELECT * FROM jobs WHERE id = ?", [id]);
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "Job not found" });
+    }
+    res.json(rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Update Job
 export const updateJob = async (req, res) => {
   const { id } = req.params;
@@ -76,3 +90,4 @@ export const deleteJob = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+

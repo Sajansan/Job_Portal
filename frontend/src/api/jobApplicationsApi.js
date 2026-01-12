@@ -3,7 +3,7 @@ import api from "./axios";
 // Apply for a job with cover letter
 export const applyJob = (jobId, coverLetter = "") => {
   return api.post("/applications", {
-    job_id: jobId,
+    jobId: jobId,
     cover_letter: coverLetter,
   });
 };

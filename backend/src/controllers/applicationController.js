@@ -8,7 +8,7 @@ import {
 export const applyForJob = async (req, res) => {
   try {
     const userId = req.user.id;
-    const jobId = req.params.jobId;
+    const { jobId } = req.body;
 
     await applyJobService(userId, jobId);
 

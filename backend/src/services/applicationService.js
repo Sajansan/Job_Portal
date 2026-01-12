@@ -24,7 +24,8 @@ export const getMyApplicationsService = async (userId) => {
     SELECT 
       ja.id,
       ja.status,
-      j.title,
+      ja.created_at AS applied_at,
+      j.title AS job_title,
       j.salary
     FROM job_applications ja
     JOIN jobs j ON ja.job_id = j.id
@@ -42,7 +43,7 @@ export const getApplicantsForJobService = async (jobId) => {
     `
     SELECT 
       u.id,
-      u.name,
+      u.name AS applicant_name,
       u.email,
       ja.status
     FROM job_applications ja

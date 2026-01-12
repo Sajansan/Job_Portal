@@ -12,7 +12,7 @@ const router = express.Router();
 
 // Job seeker applies for a job
 router.post(
-  "/apply/:jobId",
+  "/",
   verifyTokenMiddleware,
   checkRole("job_seeker"),
   applyForJob
@@ -20,7 +20,7 @@ router.post(
 
 // Job seeker views his applications
 router.get(
-  "/my-applications",
+  "/my",
   verifyTokenMiddleware,
   checkRole("job_seeker"),
   getMyApplications

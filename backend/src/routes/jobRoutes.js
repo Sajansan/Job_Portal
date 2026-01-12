@@ -2,6 +2,7 @@ import express from "express";
 import {
   createJob,
   getJobs,
+  getJobById,
   updateJob,
   deleteJob,
 } from "../controllers/jobController.js";
@@ -15,6 +16,7 @@ router.post("/", verifyTokenMiddleware, checkRole("employer"), createJob);
 router.put("/:id", verifyTokenMiddleware, checkRole("employer"), updateJob);
 router.delete("/:id", verifyTokenMiddleware, checkRole("employer"), deleteJob);
 
+router.get("/:id", getJobById);
 router.get("/", getJobs); // public
 
 export default router;
