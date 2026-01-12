@@ -24,7 +24,7 @@ export const getMyApplicationsService = async (userId) => {
     SELECT 
       ja.id,
       ja.status,
-      ja.created_at AS applied_at,
+      ja.applied_at,
       j.title AS job_title,
       j.salary
     FROM job_applications ja

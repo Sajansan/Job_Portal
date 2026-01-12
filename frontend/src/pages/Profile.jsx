@@ -132,13 +132,13 @@ const Profile = () => {
                                 className="block text-sm font-medium mb-1"
                                 style={{ color: 'var(--text-muted)' }}
                             >
-                                User ID
+                                Phone Number
                             </label>
                             <p
                                 className="text-lg font-semibold font-mono"
                                 style={{ color: 'var(--text-primary)' }}
                             >
-                                #{user?.id || "N/A"}
+                                {user?.phone || "Not provided"}
                             </p>
                         </div>
                     </div>

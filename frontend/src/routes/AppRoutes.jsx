@@ -6,7 +6,7 @@ import Dashboard from "../pages/Dashboard";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Jobs from "../pages/jobs/Jobs";
 import JobDetails from "../pages/jobs/JobDetails";
-import CreateJob from "../pages/jobs/CreateJob";
+
 import EditJob from "../pages/jobs/EditJob";
 import MyJobs from "../pages/jobs/MyJobs";
 import AppliedJobs from "../pages/jobs/AppliedJobs";
@@ -51,14 +51,7 @@ const AppRoutes = () => {
                 />
 
                 {/* Employer Routes */}
-                <Route
-                    path="/jobs/create"
-                    element={
-                        <ProtectedRoute>
-                            <CreateJob />
-                        </ProtectedRoute>
-                    }
-                />
+
                 <Route
                     path="/jobs/edit/:id"
                     element={
