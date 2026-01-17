@@ -13,6 +13,12 @@ export const register = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    if (!/^\d{10}$/.test(phone)) {
+      return res
+        .status(400)
+        .json({ message: "Phone number must be exactly 10 digits" });
+    }
+
     const existingUser = await findUserByEmail(email);
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });

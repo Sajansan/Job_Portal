@@ -17,7 +17,14 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        if (name === "phone") {
+            // Only allow numbers and max 10 digits
+            const onlyNums = value.replace(/[^0-9]/g, "").slice(0, 10);
+            setFormData({ ...formData, [name]: onlyNums });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -124,9 +131,14 @@ const Register = () => {
                             <input
                                 id="phone"
                                 name="phone"
-                                placeholder="Enter your phone number"
+                                type="tel"
+                                placeholder="Enter your 10-digit phone number"
+                                value={formData.phone}
                                 onChange={handleChange}
                                 className="form-input"
+                                maxLength={10}
+                                pattern="\d{10}"
+                                title="Please enter exactly 10 digits"
                                 required
                             />
                         </div>

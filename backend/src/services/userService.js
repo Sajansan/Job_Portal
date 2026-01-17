@@ -11,6 +11,11 @@ export const getUserById = async (userId) => {
 export const updateUserProfile = async (userId, data) => {
   const { name, phone, role } = data;
 
+  if (phone && !/^\d{10}$/.test(phone)) {
+    throw new Error("Phone number must be exactly 10 digits");
+  }
+
+
   await db.query(
     "UPDATE users SET name = ?, phone = ?, role = ? WHERE id = ?", //I allow the user to update their role temporarily for testing purposes
     [name, phone, role, userId]
