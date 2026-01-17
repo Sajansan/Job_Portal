@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getJobs } from "../../api/JobsApi";
+import { getJobs, getMyJobs } from "../../api/JobsApi";
+
 import { applyJob } from "../../api/jobApplicationsApi";
 import { getUser } from "../../utils/auth";
 import toast from "react-hot-toast";
@@ -14,7 +15,8 @@ const Jobs = () => {
     const user = getUser();
 
     useEffect(() => {
-        getJobs()
+        const fetchMethod = user?.role === "employer" ? getMyJobs : getJobs;
+        fetchMethod()
             .then((res) => {
                 setJobs(res.data);
                 setFilteredJobs(res.data);
@@ -25,7 +27,7 @@ const Jobs = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [user?.role]);
 
     useEffect(() => {
         const filtered = jobs.filter(job =>

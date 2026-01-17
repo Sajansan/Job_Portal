@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUser } from "../utils/auth";
-import { getJobs } from "../api/JobsApi";
+import { getJobs, getMyJobs } from "../api/JobsApi";
+
 import { getMyApplications } from "../api/jobApplicationsApi";
 
 const Dashboard = () => {
@@ -15,7 +16,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const jobsRes = await getJobs();
+                const jobsRes = user?.role === "employer" ? await getMyJobs() : await getJobs();
                 setStats(prev => ({ ...prev, totalJobs: jobsRes.data.length }));
 
                 if (user?.role === "job_seeker") {
