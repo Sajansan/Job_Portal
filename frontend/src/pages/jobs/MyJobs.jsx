@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getJobs, deleteJob, createJob } from "../../api/JobsApi";
+import { getMyJobs, deleteJob, createJob } from "../../api/JobsApi";
+
 import { getCategories } from "../../api/CategoriesApi";
 import { getMyCompany } from "../../api/CompaniesApi";
 import toast from "react-hot-toast";
@@ -30,10 +31,11 @@ const MyJobs = () => {
         setLoading(true);
         try {
             const [jobsRes, catRes, compRes] = await Promise.all([
-                getJobs(),
+                getMyJobs(),
                 getCategories(),
                 getMyCompany()
             ]);
+
             setJobs(jobsRes.data);
             setCategories(catRes.data);
             setCompany(compRes.data);
@@ -51,7 +53,7 @@ const MyJobs = () => {
     };
 
     const fetchJobs = () => {
-        getJobs()
+        getMyJobs()
             .then((res) => {
                 setJobs(res.data);
             })
@@ -59,6 +61,7 @@ const MyJobs = () => {
                 toast.error("Failed to load jobs");
             });
     };
+
 
     useEffect(() => {
         fetchInitialData();

@@ -42,7 +42,41 @@ export const createJob = async (req, res) => {
 // Get All Jobs
 export const getJobs = async (req, res) => {
   try {
-    const [jobs] = await pool.query("SELECT * FROM jobs");
+    const [jobs] = await pool.query(`
+      SELECT j.*, c.company_name as company 
+      FROM jobs j
+      LEFT JOIN companies c ON j.company_id = c.id
+    `);
+    res.json(jobs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get My Jobs (for employer)
+export const getMyJobs = async (req, res) => {
+  try {
+    // 1. Get company_id for this user
+    const [companies] = await pool.query(
+      "SELECT id FROM companies WHERE user_id = ?",
+      [req.user.id]
+    );
+
+    if (companies.length === 0) {
+      return res.status(404).json({ message: "Company profile not found" });
+    }
+
+    const companyId = companies[0].id;
+
+    // 2. Get jobs for this company
+    const [jobs] = await pool.query(
+      `SELECT j.*, c.company_name as company 
+       FROM jobs j
+       JOIN companies c ON j.company_id = c.id
+       WHERE j.company_id = ?`,
+      [companyId]
+    );
+
     res.json(jobs);
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -5,7 +5,9 @@ import {
   getJobById,
   updateJob,
   deleteJob,
+  getMyJobs,
 } from "../controllers/jobController.js";
+
 
 import { verifyTokenMiddleware } from "../middlewares/authMiddleware.js";
 import { checkRole } from "../middlewares/roleMiddleware.js";
@@ -16,6 +18,7 @@ router.post("/", verifyTokenMiddleware, checkRole("employer"), createJob);
 router.put("/:id", verifyTokenMiddleware, checkRole("employer"), updateJob);
 router.delete("/:id", verifyTokenMiddleware, checkRole("employer"), deleteJob);
 
+router.get("/my", verifyTokenMiddleware, checkRole("employer"), getMyJobs);
 router.get("/:id", getJobById);
 router.get("/", getJobs); // public
 

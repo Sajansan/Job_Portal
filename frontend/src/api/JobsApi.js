@@ -4,6 +4,10 @@ export const getJobs = () => {
   return api.get("/jobs");
 };
 
+export const getMyJobs = () => {
+  return api.get("/jobs/my");
+};
+
 export const getJobById = (id) => {
   return api.get(`/jobs/${id}`);
 };
